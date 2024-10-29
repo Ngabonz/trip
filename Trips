@@ -1,0 +1,108 @@
+import java.util.Scanner;
+import java.util.HashMap;
+import java.util.Map;
+
+public class TravelItineraryPlanner {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Map<String, Trip> trips = new HashMap<>();
+
+        System.out.println("Welcome to the Travel Itinerary Planner!");
+
+        while (true) {
+            System.out.println("\nMenu:");
+            System.out.println("1. Add a trip");
+            System.out.println("2. View trips");
+            System.out.println("3. Exit");
+
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    addTrip(trips, scanner);
+                    break;
+
+                case 2:
+                    viewTrips(trips);
+                    break;
+
+                case 3:
+                    System.out.println("Thank you for using the Travel Itinerary Planner!");
+                    scanner.close();
+                    return;
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    private static void addTrip(Map<String, Trip> trips, Scanner scanner) {
+        System.out.print("Enter the trip name: ");
+        String tripName = scanner.nextLine();
+
+        System.out.print("Enter the destination: ");
+        String destination = scanner.nextLine();
+
+        System.out.print("Enter the start date (yyyy-mm-dd): ");
+        String startDate = scanner.nextLine();
+
+        System.out.print("Enter the end date (yyyy-mm-dd): ");
+        String endDate = scanner.nextLine();
+
+        System.out.print("Enter your preferences (e.g., budget, activities): ");
+        String preferences = scanner.nextLine();
+
+        Trip trip = new Trip(tripName, destination, startDate, endDate, preferences);
+        trips.put(tripName, trip);
+        System.out.println("Trip added successfully!");
+    }
+
+    private static void viewTrips(Map<String, Trip> trips) {
+        if (trips.isEmpty()) {
+            System.out.println("No trips found. Please add a trip first.");
+        } else {
+            System.out.println("Your Trips:");
+            for (String tripName : trips.keySet()) {
+                System.out.println(tripName + ": " + trips.get(tripName).getDestination() + " (" + trips.get(tripName).getStartDate() + " - " + trips.get(tripName).getEndDate() + ")");
+            }
+        }
+    }
+
+    private static class Trip {
+        private String tripName;
+        private String destination;
+        private String startDate;
+        private String endDate;
+        private String preferences;
+
+        public Trip(String tripName, String destination, String startDate, String endDate, String preferences) {
+            this.tripName = tripName;
+            this.destination = destination;
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.preferences = preferences;
+        }
+
+        public String getTripName() {
+            return tripName;
+        }
+
+        public String getDestination() {
+            return destination;
+        }
+
+        public String getStartDate() {
+            return startDate;
+        }
+
+        public String getEndDate() {
+            return endDate;
+        }
+
+        public String getPreferences() {
+            return preferences;
+        }
+    }
+}
